@@ -32,6 +32,10 @@
       }
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/julien-callens/tanglekit-plugin.git"
+  },
   "author": "Julien Callens",
   "license": "MIT"
 }
