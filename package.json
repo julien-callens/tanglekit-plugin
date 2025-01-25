@@ -1,0 +1,37 @@
+{
+  "name": "tanglekit",
+  "displayName": "TangleKit",
+  "description": "A syntax highlighting and tooling extension for Tangle files.",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "tangle",
+        "aliases": [
+          "Tangle",
+          "tangle"
+        ],
+        "extensions": [
+          ".tangle",
+          ".tngl"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "tangle",
+        "scopeName": "source.tangle",
+        "path": "./syntaxes/tangle.tmLanguage.json"
+      }
+    ]
+  },
+  "author": "Julien Callens",
+  "license": "MIT"
+}

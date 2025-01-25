@@ -1,0 +1,322 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Tangle",
+	"scopeName": "source.tangle",
+	"fileTypes": [
+		"tangle",
+		"tnl"
+	],
+	"patterns": [
+		{
+			"include": "#codeBlock"
+		},
+		{
+			"include": "#propsBlock"
+		},
+		{
+			"include": "#importBlock"
+		},
+		{
+			"include": "#elementsDeclaration"
+		}
+	],
+	"repository": {
+		"codeBlock": {
+			"name": "meta.code.tangle",
+			"begin": "(<)(code)(\\s[^>]*)?(>)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.begin.tangle"
+				},
+				"2": {
+					"name": "entity.name.tag.tangle"
+				},
+				"4": {
+					"name": "punctuation.definition.tag.end.tangle"
+				}
+			},
+			"end": "(</)(code)(>)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.begin.tangle"
+				},
+				"2": {
+					"name": "entity.name.tag.tangle"
+				},
+				"3": {
+					"name": "punctuation.definition.tag.end.tangle"
+				}
+			},
+			"contentName": "source.js",
+			"patterns": [
+				{
+					"include": "#commonCode"
+				},
+				{
+					"include": "source.js"
+				}
+			]
+		},
+		"propsBlock": {
+			"name": "meta.props.tangle",
+			"begin": "(<)(props)(\\s[^>]*)?(>)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.begin.tangle"
+				},
+				"2": {
+					"name": "entity.name.tag.tangle"
+				},
+				"4": {
+					"name": "punctuation.definition.tag.end.tangle"
+				}
+			},
+			"end": "(</)(props)(>)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.begin.tangle"
+				},
+				"2": {
+					"name": "entity.name.tag.tangle"
+				},
+				"3": {
+					"name": "punctuation.definition.tag.end.tangle"
+				}
+			},
+			"patterns": [
+				{
+					"match": "\\b(let|const)\\b",
+					"name": "storage.type.variable.tangle"
+				},
+				{
+					"match": "\\b[a-zA-Z_]\\w*\\b",
+					"name": "variable.other.props.tangle"
+				},
+				{
+					"match": "=",
+					"name": "keyword.operator.assignment.tangle"
+				},
+				{
+					"match": ";",
+					"name": "punctuation.terminator.statement.tangle"
+				},
+				{
+					"match": "(['\"])(?:(?:\\\\.)|[^'\\\\])*\\1",
+					"name": "string.quoted.props.tangle"
+				}
+			]
+		},
+		"importBlock": {
+			"name": "meta.import.tangle",
+			"begin": "(<)(import)(\\s[^>]*)?(>)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.begin.tangle"
+				},
+				"2": {
+					"name": "entity.name.tag.tangle"
+				},
+				"4": {
+					"name": "punctuation.definition.tag.end.tangle"
+				}
+			},
+			"end": "(</)(import)(>)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.begin.tangle"
+				},
+				"2": {
+					"name": "entity.name.tag.tangle"
+				},
+				"3": {
+					"name": "punctuation.definition.tag.end.tangle"
+				}
+			},
+			"patterns": [
+				{
+					"match": "\\bfrom\\b",
+					"name": "keyword.control.import.tangle"
+				},
+				{
+					"match": "(['\"])(?:(?:\\\\.)|[^'\\\\])*\\1",
+					"name": "string.quoted.import.tangle"
+				},
+				{
+					"match": ";",
+					"name": "punctuation.terminator.statement.tangle"
+				},
+				{
+					"match": "\\b[a-zA-Z_]\\w*\\b",
+					"name": "variable.import.tangle"
+				}
+			]
+		},
+		"elementsDeclaration": {
+			"name": "meta.element.tangle",
+			"patterns": [
+				{
+					"name": "meta.tag.tangle",
+					"begin": "<(?!code|props|import)([a-zA-Z_]\\w*)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.tag.begin.tangle"
+						},
+						"1": {
+							"name": "entity.name.tag.tangle"
+						}
+					},
+					"end": ">",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.tag.end.tangle"
+						}
+					},
+					"patterns": [
+						{
+							"begin": "\\b([a-zA-Z_]\\w*)(\\s*=)",
+							"beginCaptures": {
+								"1": {
+									"name": "entity.other.attribute-name.tangle"
+								},
+								"2": {
+									"name": "keyword.operator.assignment.tangle"
+								}
+							},
+							"end": "(?=>|/?>|[a-zA-Z_]\\w*=)",
+							"patterns": [
+								{
+									"name": "meta.embedded.tangle",
+									"begin": "\\{\\{",
+									"end": "\\}\\}",
+									"contentName": "source.js",
+									"patterns": [
+										{
+											"include": "#commonCode"
+										},
+										{
+											"include": "source.js"
+										}
+									]
+								},
+								{
+									"match": "(['\"])(?:(?:\\\\.)|[^'\\\\])*\\1",
+									"name": "string.quoted.attribute-value.tangle"
+								}
+							]
+						}
+					]
+				},
+				{
+					"match": "/?>",
+					"name": "punctuation.definition.tag.end.tangle"
+				},
+				{
+					"name": "meta.tag.content.tangle",
+					"begin": "(?<=>)",
+					"end": "(?=</)",
+					"patterns": [
+						{
+							"name": "meta.embedded.tangle",
+							"begin": "\\{\\{",
+							"end": "\\}\\}",
+							"contentName": "source.js",
+							"patterns": [
+								{
+									"include": "#commonCode"
+								},
+								{
+									"include": "source.js"
+								}
+							]
+						},
+						{
+							"match": "[^<]+",
+							"name": "text.html.basic.tangle"
+						},
+						{
+							"include": "#elementsDeclaration"
+						},
+						{
+							"include": "#codeBlock"
+						},
+						{
+							"include": "#propsBlock"
+						},
+						{
+							"include": "#importBlock"
+						}
+					]
+				},
+				{
+					"name": "meta.tag.tangle",
+					"begin": "</(?!code|props|import)([a-zA-Z_]\\w*)>",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.tag.begin.tangle"
+						},
+						"1": {
+							"name": "entity.name.tag.tangle"
+						}
+					},
+					"end": "(?!.)"
+				}
+			]
+		},
+		"commonCode": {
+			"patterns": [
+				{
+					"match": "//.*$",
+					"name": "comment.line.double-slash.tangle"
+				},
+				{
+					"match": "\\b(if|else|else if)\\b",
+					"name": "keyword.control.conditional.tangle"
+				},
+				{
+					"match": "\\bfunction\\b",
+					"name": "keyword.declaration.function.tangle"
+				},
+				{
+					"match": "\\b(let|const)\\b",
+					"name": "storage.type.variable.tangle"
+				},
+				{
+					"match": "\\b(true|false)\\b",
+					"name": "constant.language.boolean.tangle"
+				},
+				{
+					"match": "\\b[0-9]+\\b",
+					"name": "constant.numeric.tangle"
+				},
+				{
+					"match": "\\b[a-zA-Z_]\\w*\\b",
+					"name": "variable.other.code.tangle"
+				},
+				{
+					"match": "=|\\+=|-=|\\*=|/=|\\+\\+|--",
+					"name": "keyword.operator.assignment.tangle"
+				},
+				{
+					"match": "===|!==|==|!=|<=|>=|<|>|\\+|\\-|\\*|/|%|&&|\\|\\||!",
+					"name": "keyword.operator.tangle"
+				},
+				{
+					"match": ";",
+					"name": "punctuation.terminator.statement.tangle"
+				},
+				{
+					"match": "\\(",
+					"name": "punctuation.definition.group.tangle"
+				},
+				{
+					"match": "\\)",
+					"name": "punctuation.definition.group.tangle"
+				},
+				{
+					"match": "(['\"])(?:(?:\\\\.)|[^'\\\\])*\\1",
+					"name": "string.quoted.code.tangle"
+				}
+			]
+		}
+	}
+}
