@@ -1,6 +1,6 @@
 {
     "comments": {
-        "lineComment": "//",
+        "lineComment": "//"
     },
     "brackets": [
         [
@@ -68,9 +68,9 @@
             "'"
         ]
     ],
-    "wordPattern": "[a-zA-Z_0-9\\$\\-]+",
+    "wordPattern": "[A-Za-z_][A-Za-z0-9_]*",
     "indentationRules": {
-        "increaseIndentPattern": "^.*(\\{|\\{\\{)[^}\"']*$",
-        "decreaseIndentPattern": "^\\s*\\}"
+        "increaseIndentPattern": "^\\s*(?:<[A-Za-z_]\\w*\\b[^<>]*(?<!/)>\\s*|\\{\\{\\s*(?:if\\b|else\\b).*?\\}\\}\\s*|.*\\{\\s*)$",
+        "decreaseIndentPattern": "^\\s*(?:</|\\{\\{\\s*(?:/if\\b|else\\b)|\\})"
     }
 }

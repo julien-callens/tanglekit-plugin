@@ -1,31 +1,17 @@
-# tanglekit
+# TangleKit for VS Code
 
-A minimal syntax highlighting and tooling extension for Tangle files.
+Edit TangleKit components in `.tngl` and `.tangle` files with VS Code 1.96 or later.
 
-## Features
+- Highlight imports, props, code, tags, attributes, expressions, and template conditionals.
+- See the first compiler syntax error in the editor and Problems panel as you type. The bundled TangleKit 0.6.6 parser checks the open document, including unsaved edits. Import resolution and cross-component prop validation run in the Vite build.
+- Get indentation for component tags, function bodies, and `if` / `else` branches.
+- Use the following prefixes in **Insert Snippet** or completion suggestions.
 
-- Highlights Tangle syntax, including embedded JavaScript.
-- Supports `<code>`, `<props>`, `<import>` blocks, and custom elements.
-- Embeds JavaScript grammar but also keeps Tangle-specific keywords.
+| Prefix | Inserts |
+| --- | --- |
+| `tngl-component` | A component with a default prop and a root element |
+| `tngl-import` | A component import inside an existing `<import>` block |
+| `tngl-if` | An `if` / `else` template block |
+| `tngl-click` | A button that calls a handler |
 
-## Requirements
-
-- Visual Studio Code 1.60+ (recommended).
-- No additional dependencies needed.
-
-## Extension Settings
-
-- `tanglekit.enable`: Enable or disable Tangle syntax highlighting.
-
-## Known Issues
-
-- Some conflicts may occur if other JavaScript extensions override embedded
-  scopes.
-
-## Release Notes
-
-### 1.0.0
-
-- Initial release with basic Tangle syntax support.
-
-**Enjoy TangleKit!**
+The extension runs on desktop and web VS Code. See the [TangleKit compiler documentation](https://github.com/julien-callens/tanglekit/blob/main/tangle/README.md) for the language examples.

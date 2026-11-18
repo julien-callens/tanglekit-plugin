@@ -4,7 +4,7 @@
 	"scopeName": "source.tangle",
 	"fileTypes": [
 		"tangle",
-		"tnl"
+		"tngl"
 	],
 	"patterns": [
 		{
@@ -17,13 +17,13 @@
 			"include": "#importBlock"
 		},
 		{
-			"include": "#elementsDeclaration"
+			"include": "#template"
 		}
 	],
 	"repository": {
 		"codeBlock": {
 			"name": "meta.code.tangle",
-			"begin": "(<)(code)(\\s[^>]*)?(>)",
+			"begin": "(<)(code)(>)",
 			"beginCaptures": {
 				"1": {
 					"name": "punctuation.definition.tag.begin.tangle"
@@ -31,7 +31,7 @@
 				"2": {
 					"name": "entity.name.tag.tangle"
 				},
-				"4": {
+				"3": {
 					"name": "punctuation.definition.tag.end.tangle"
 				}
 			},
@@ -59,7 +59,7 @@
 		},
 		"propsBlock": {
 			"name": "meta.props.tangle",
-			"begin": "(<)(props)(\\s[^>]*)?(>)",
+			"begin": "(<)(props)(>)",
 			"beginCaptures": {
 				"1": {
 					"name": "punctuation.definition.tag.begin.tangle"
@@ -67,7 +67,7 @@
 				"2": {
 					"name": "entity.name.tag.tangle"
 				},
-				"4": {
+				"3": {
 					"name": "punctuation.definition.tag.end.tangle"
 				}
 			},
@@ -85,30 +85,13 @@
 			},
 			"patterns": [
 				{
-					"match": "\\b(let|const)\\b",
-					"name": "storage.type.variable.tangle"
-				},
-				{
-					"match": "\\b[a-zA-Z_]\\w*\\b",
-					"name": "variable.other.props.tangle"
-				},
-				{
-					"match": "=",
-					"name": "keyword.operator.assignment.tangle"
-				},
-				{
-					"match": ";",
-					"name": "punctuation.terminator.statement.tangle"
-				},
-				{
-					"match": "(['\"])(?:(?:\\\\.)|[^'\\\\])*\\1",
-					"name": "string.quoted.props.tangle"
+					"include": "#commonCode"
 				}
 			]
 		},
 		"importBlock": {
 			"name": "meta.import.tangle",
-			"begin": "(<)(import)(\\s[^>]*)?(>)",
+			"begin": "(<)(import)(>)",
 			"beginCaptures": {
 				"1": {
 					"name": "punctuation.definition.tag.begin.tangle"
@@ -116,7 +99,7 @@
 				"2": {
 					"name": "entity.name.tag.tangle"
 				},
-				"4": {
+				"3": {
 					"name": "punctuation.definition.tag.end.tangle"
 				}
 			},
@@ -138,8 +121,7 @@
 					"name": "keyword.control.import.tangle"
 				},
 				{
-					"match": "(['\"])(?:(?:\\\\.)|[^'\\\\])*\\1",
-					"name": "string.quoted.import.tangle"
+					"include": "#string"
 				},
 				{
 					"match": ";",
@@ -151,126 +133,22 @@
 				}
 			]
 		},
-		"elementsDeclaration": {
-			"name": "meta.element.tangle",
-			"patterns": [
-				{
-					"name": "meta.tag.tangle",
-					"begin": "<(?!code|props|import)([a-zA-Z_]\\w*)",
-					"beginCaptures": {
-						"0": {
-							"name": "punctuation.definition.tag.begin.tangle"
-						},
-						"1": {
-							"name": "entity.name.tag.tangle"
-						}
-					},
-					"end": ">",
-					"endCaptures": {
-						"0": {
-							"name": "punctuation.definition.tag.end.tangle"
-						}
-					},
-					"patterns": [
-						{
-							"begin": "\\b([a-zA-Z_]\\w*)(\\s*=)",
-							"beginCaptures": {
-								"1": {
-									"name": "entity.other.attribute-name.tangle"
-								},
-								"2": {
-									"name": "keyword.operator.assignment.tangle"
-								}
-							},
-							"end": "(?=>|/?>|[a-zA-Z_]\\w*=)",
-							"patterns": [
-								{
-									"name": "meta.embedded.tangle",
-									"begin": "\\{\\{",
-									"end": "\\}\\}",
-									"contentName": "source.js",
-									"patterns": [
-										{
-											"include": "#commonCode"
-										},
-										{
-											"include": "source.js"
-										}
-									]
-								},
-								{
-									"match": "(['\"])(?:(?:\\\\.)|[^'\\\\])*\\1",
-									"name": "string.quoted.attribute-value.tangle"
-								}
-							]
-						}
-					]
-				},
-				{
-					"match": "/?>",
-					"name": "punctuation.definition.tag.end.tangle"
-				},
-				{
-					"name": "meta.tag.content.tangle",
-					"begin": "(?<=>)",
-					"end": "(?=</)",
-					"patterns": [
-						{
-							"name": "meta.embedded.tangle",
-							"begin": "\\{\\{",
-							"end": "\\}\\}",
-							"contentName": "source.js",
-							"patterns": [
-								{
-									"include": "#commonCode"
-								},
-								{
-									"include": "source.js"
-								}
-							]
-						},
-						{
-							"match": "[^<]+",
-							"name": "text.html.basic.tangle"
-						},
-						{
-							"include": "#elementsDeclaration"
-						},
-						{
-							"include": "#codeBlock"
-						},
-						{
-							"include": "#propsBlock"
-						},
-						{
-							"include": "#importBlock"
-						}
-					]
-				},
-				{
-					"name": "meta.tag.tangle",
-					"begin": "</(?!code|props|import)([a-zA-Z_]\\w*)>",
-					"beginCaptures": {
-						"0": {
-							"name": "punctuation.definition.tag.begin.tangle"
-						},
-						"1": {
-							"name": "entity.name.tag.tangle"
-						}
-					},
-					"end": "(?!.)"
-				}
-			]
-		},
 		"commonCode": {
 			"patterns": [
+				{
+					"include": "#string"
+				},
 				{
 					"match": "//.*$",
 					"name": "comment.line.double-slash.tangle"
 				},
 				{
-					"match": "\\b(if|else|else if)\\b",
+					"match": "\\b(else if|if|else)\\b",
 					"name": "keyword.control.conditional.tangle"
+				},
+				{
+					"match": "\\breturn\\b",
+					"name": "keyword.control.return.tangle"
 				},
 				{
 					"match": "\\bfunction\\b",
@@ -289,15 +167,23 @@
 					"name": "constant.numeric.tangle"
 				},
 				{
-					"match": "\\b[a-zA-Z_]\\w*\\b",
+					"match": "\\b[A-Za-z_]\\w*(?=\\s*\\()",
+					"name": "entity.name.function.tangle"
+				},
+				{
+					"match": "\\b[A-Za-z_]\\w*\\b",
 					"name": "variable.other.code.tangle"
 				},
 				{
-					"match": "=|\\+=|-=|\\*=|/=|\\+\\+|--",
+					"match": "===|!==|<=|>=|&&|\\|\\|",
+					"name": "keyword.operator.tangle"
+				},
+				{
+					"match": "[+*/-]?=|\\+\\+|--",
 					"name": "keyword.operator.assignment.tangle"
 				},
 				{
-					"match": "===|!==|==|!=|<=|>=|<|>|\\+|\\-|\\*|/|%|&&|\\|\\||!",
+					"match": "[<>+*/%!-]",
 					"name": "keyword.operator.tangle"
 				},
 				{
@@ -305,18 +191,84 @@
 					"name": "punctuation.terminator.statement.tangle"
 				},
 				{
-					"match": "\\(",
+					"match": "[()]",
 					"name": "punctuation.definition.group.tangle"
-				},
-				{
-					"match": "\\)",
-					"name": "punctuation.definition.group.tangle"
-				},
-				{
-					"match": "(['\"])(?:(?:\\\\.)|[^'\\\\])*\\1",
-					"name": "string.quoted.code.tangle"
 				}
 			]
+		},
+		"template": {
+			"name": "meta.template.tangle",
+			"begin": "(?=<)",
+			"end": "(?!)",
+			"patterns": [
+				{
+					"include": "#tag"
+				},
+				{
+					"include": "#interpolation"
+				},
+				{
+					"match": "[^<{]+",
+					"name": "text.html.basic.tangle"
+				}
+			]
+		},
+		"tag": {
+			"name": "meta.tag.tangle",
+			"begin": "(</?)\\s*([A-Za-z_]\\w*)",
+			"end": "/\\s*>|>",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.begin.tangle"
+				},
+				"2": {
+					"name": "entity.name.tag.tangle"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.tag.end.tangle"
+				}
+			},
+			"patterns": [
+				{
+					"match": "[A-Za-z_]\\w*",
+					"name": "entity.other.attribute-name.tangle"
+				},
+				{
+					"match": "=",
+					"name": "keyword.operator.assignment.tangle"
+				},
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#interpolation"
+				}
+			]
+		},
+		"interpolation": {
+			"name": "meta.embedded.tangle",
+			"begin": "\\{\\{",
+			"end": "\\}\\}",
+			"contentName": "source.js",
+			"patterns": [
+				{
+					"match": "/if\\b",
+					"name": "keyword.control.conditional.tangle"
+				},
+				{
+					"include": "#commonCode"
+				},
+				{
+					"include": "source.js"
+				}
+			]
+		},
+		"string": {
+			"name": "string.quoted.tangle",
+			"begin": "([\"'])",
+			"end": "\\1"
 		}
 	}
 }

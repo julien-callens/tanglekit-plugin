@@ -1,17 +1,10 @@
 # Change Log
 
-All notable changes to the "tanglekit" extension will be documented in this
-file.
+## 1.1.0
 
-## [1.0.0] - YYYY-MM-DD
+- Fix highlighting for interpolated text, quoted attributes, comparisons, component tags, and template conditionals.
+- Add live compiler syntax diagnostics, Tangle snippets, and template indentation.
 
-### Added
+## 1.0.0
 
-- Initial release with Tangle syntax highlighting.
-- Support for `<code>`, `<props>`, and `<import>` blocks.
-- Embedded JavaScript highlighting within `{{ ... }}` blocks.
-- Custom element and attribute highlighting.
-
-## [Unreleased]
-
-- Planned enhancements to include additional tooling and linting support.
+- Initial release with Tangle syntax highlighting for blocks, expressions, elements, and attributes.

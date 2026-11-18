@@ -1,8 +1,8 @@
 {
   "name": "tanglekit",
   "displayName": "TangleKit",
-  "description": "A syntax highlighting and tooling extension for Tangle files.",
-  "version": "1.0.0",
+  "description": "TangleKit syntax highlighting, compiler diagnostics, snippets, and indentation for VS Code.",
+  "version": "1.1.0",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -28,7 +28,16 @@
       {
         "language": "tangle",
         "scopeName": "source.tangle",
-        "path": "./syntaxes/tangle.tmLanguage.json"
+        "path": "./syntaxes/tangle.tmLanguage.json",
+        "embeddedLanguages": {
+          "source.js": "javascript"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "tangle",
+        "path": "./snippets/tangle.json"
       }
     ]
   },
@@ -37,5 +46,23 @@
     "url": "https://github.com/julien-callens/tanglekit-plugin.git"
   },
   "author": "Julien Callens",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "tanglekit": "0.6.6",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.3.2"
+  },
+  "publisher": "JulienCallens",
+  "icon": "images/icon.png",
+  "scripts": {
+    "test": "node --test test/*.test.cjs",
+    "build": "node build.mjs",
+    "vscode:prepublish": "npm run build"
+  },
+  "main": "./dist/extension.cjs",
+  "browser": "./dist/extension.cjs",
+  "activationEvents": [
+    "onLanguage:tangle"
+  ]
 }
